@@ -39,7 +39,7 @@ const Header = () => {
   return (
     <motion.div
       className="flex items-start mt-6 justify-center h-[95vh] w-full"
-      style={{ perspective: "1800px" }}
+      style={{ perspective: "2000px" }}
     >
       <motion.div
         ref={ref}
