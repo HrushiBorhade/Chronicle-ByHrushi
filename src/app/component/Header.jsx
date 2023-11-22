@@ -8,25 +8,30 @@ import {
   motion,
   useMotionValueEvent,
   cubicBezier,
+  circOut,
 } from "framer-motion";
 const Header = () => {
   const [cursorStyle, setCursorStyle] = useState({});
+  const [angle, setAngle] = useState(0);
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
-  const rotate = useTransform(scrollYProgress, [0, 0.4], [0, -80], {
-    ease: cubicBezier(),
-  });
+  const rotate = useTransform(scrollYProgress, [0, 0.4], [-10, -80]);
+  const [degree, setDegree] = useState(0);
+
+  useEffect(() => {
+    return rotate.onChange((v) => {
+      setDegree(Math.round(v));
+    });
+  }, [rotate]);
   const mouseEnter = () => {
     setCursorStyle({
       cursor: "url('/hover-pointer.svg') 6 6, auto",
     });
   };
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    console.log("Page scroll: ", latest);
-  });
+
   const mouseLeave = () => {
     setCursorStyle({});
   };
@@ -40,9 +45,18 @@ const Header = () => {
         onMouseLeave={mouseLeave}
         style={{
           ...cursorStyle,
-          rotateX: rotate,
+          // transform: `rotateX(${rotate.get()}deg)`,
         }}
-        animate={{}}
+        animate={{
+          rotateX: degree,
+        }}
+        transition={{
+          rotateX: {
+            type: "spring",
+            stiffness: 300,
+            damping: 20,
+          },
+        }}
       >
         <Image
           src="/header.png"

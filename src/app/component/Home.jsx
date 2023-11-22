@@ -10,6 +10,7 @@ import Image from "next/image";
 import Header from "./Header";
 import ContainerScroll from "./ContainerScroll";
 import MobileHover from "./MobileHover";
+import ParallaxScroll from "./ParallaxScroll";
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
