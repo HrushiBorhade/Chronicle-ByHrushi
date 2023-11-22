@@ -18,7 +18,7 @@ const Header = () => {
     target: ref,
     offset: ["start start", "end start"],
   });
-  const rotate = useTransform(scrollYProgress, [0, 0.4], [-10, -80]);
+  const rotate = useTransform(scrollYProgress, [0, 0.4], [0, -80]);
   const [degree, setDegree] = useState(0);
 
   useEffect(() => {
@@ -37,7 +37,10 @@ const Header = () => {
   };
 
   return (
-    <motion.div className="flex items-start mt-6 justify-center h-[95vh] w-full">
+    <motion.div
+      className="flex items-start mt-6 justify-center h-[95vh] w-full"
+      style={{ perspective: "1800px" }}
+    >
       <motion.div
         ref={ref}
         className="relative "
@@ -45,18 +48,17 @@ const Header = () => {
         onMouseLeave={mouseLeave}
         style={{
           ...cursorStyle,
-          // transform: `rotateX(${rotate.get()}deg)`,
         }}
         animate={{
           rotateX: degree,
         }}
-        transition={{
-          rotateX: {
-            type: "spring",
-            stiffness: 300,
-            damping: 20,
-          },
-        }}
+        // transition={{
+        //   rotateX: {
+        //     type: "spring",
+        //     stiffness: 10,
+        //     damping: 5,
+        //   },
+        // }}
       >
         <Image
           src="/header.png"
@@ -67,7 +69,7 @@ const Header = () => {
           style={{}}
           priority={true}
         />
-        <div className="absolute top-0 flex items-center justify-around w-full h-full gap-2 p-6 px-16 ">
+        <motion.div className="absolute top-0 flex items-center justify-around w-full h-full gap-2 p-6 px-16 ">
           <div className="relative flex-[0.5] flex flex-col items-start justify-center gap-4">
             <div className="bg-[#7053FF] h-[26px] flex items-center justify-center p-1 px-2 rounded-2xl gap-1 hover:gap-3 transition-all ease-in duration-200">
               <p className="text-[12px] leading-[18px] text-white ">
@@ -122,7 +124,7 @@ const Header = () => {
               alt="header-frame"
             />
           </div>
-        </div>
+        </motion.div>
       </motion.div>
     </motion.div>
   );
